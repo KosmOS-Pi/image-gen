@@ -1,0 +1,7 @@
+IMG_NAME=kosmos-bookworm-arm64
+PI_GEN_RELEASE=KosmOS
+RELEASE=bookworm
+DEPLOY_COMPRESSION=xz
+TARGET_HOSTNAME=kosmos
+ENABLE_SSH=1
+STAGE_LIST="stage0 stage1 stage2"
