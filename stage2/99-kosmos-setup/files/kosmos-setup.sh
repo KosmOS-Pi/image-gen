@@ -22,6 +22,7 @@ apt-get -y install -y xserver-xorg lightdm kde-standard realvnc-vnc-server kstar
 # get the chosen username
 MYUSER=$( getent passwd 1000 | cut -d: -f1 )
 
+# Setup lightdm
 mv /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf.dist
 cat > /etc/lightdm/lightdm.conf << EOF
 [LightDM]
@@ -29,6 +30,7 @@ cat > /etc/lightdm/lightdm.conf << EOF
 [Seat:*]
 autologin-user=$MYUSER
 autologin-user-timeout=0
+autologin-session=plasma
 
 [XDMCPServer]
 
@@ -36,16 +38,18 @@ autologin-user-timeout=0
 
 EOF
 
+# Setup lightdm greeter
+mv /etc/lightdm/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf.dist
+cat > /etc/lightdm/lightdm-gtk-greeter.conf << EOF
+[greeter]
+background=#1F0000
+EOF
+
 # Prepare for LightDM, VNC and graphic desktop
 systemctl disable sddm
 systemctl enable lightdm
 systemctl enable vncserver-x11-serviced.service
 systemctl set-default graphical.target
-
-# Do a first lightdm start to initialize state
-systemctl start lightdm
-sleep 10
-systemctl stop lightdm
 
 # Clear our flag so to not run again
 rm -f /etc/trigger-kosmos-setup
