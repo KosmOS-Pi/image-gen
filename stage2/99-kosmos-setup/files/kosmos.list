@@ -1,0 +1,2 @@
+deb [signed-by=/etc/apt/keyrings/kosmos.gpg.asc] https://deb.kosmos-pi.org/bookworm/ bookworm main
+deb [signed-by=/etc/apt/keyrings/kosmos.gpg.asc] https://deb.kosmos-pi.org/bookworm/ bookworm-old main
