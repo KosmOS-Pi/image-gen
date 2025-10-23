@@ -17,7 +17,7 @@ done
 apt-get update
 apt-get -y upgrade
 
-apt-get -y install -y xserver-xorg lightdm kde-standard realvnc-vnc-server kstars phd2 chromium
+apt-get -y install -y xserver-xorg lightdm kde-standard realvnc-vnc-server kstars phd2 chromium kosmos-mods
 
 # get the chosen username
 MYUSER=$( getent passwd 1000 | cut -d: -f1 )
