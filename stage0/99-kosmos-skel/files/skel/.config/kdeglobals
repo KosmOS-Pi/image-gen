@@ -140,10 +140,10 @@ AccentColor=94,0,0
 ColorSchemeHash=01662607e36cd33eacc7d7d7189f69c26b9a2cc8
 LastUsedCustomAccentColor=94,0,0
 UseSystemBell=true
+accentColorFromWallpaper=true
 
 [KDE]
-LookAndFeelPackage=org.kde.breezedark.desktop
-widgetStyle=Fusion
+LookAndFeelPackage=org.kosmos-pi.dark.desktop
 
 [KFileDialog Settings]
 Allow Expansion=false
