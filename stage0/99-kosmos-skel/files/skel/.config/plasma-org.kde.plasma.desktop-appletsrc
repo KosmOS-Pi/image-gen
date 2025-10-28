@@ -55,6 +55,7 @@ popupWidth=655
 
 [Containments][2][Applets][3][Configuration][General]
 favoritesPortedToKAstats=true
+icon=kosmos
 
 [Containments][2][Applets][3][Configuration][Shortcuts]
 global=Alt+F1

@@ -1,12 +1,14 @@
 [Unit]
-Description=Complete KosmOS setup after onboarding
+Description=Complete KosmOS setup
 After=network-online.target
 Wants=network-online.target
-ConditionPathExists=/etc/trigger-kosmos-setup
+
 
 [Service]
-Type=oneshot
-ExecStart=/usr/local/bin/kosmos-setup.sh
+Type=idle
+ExecStart=/usr/local/bin/kosmos-setup-wrapper.sh
+StandardOutput=journal
+StandardError=inherit
 RemainAfterExit=no
 
 [Install]

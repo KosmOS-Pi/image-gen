@@ -2,16 +2,11 @@
 
 set -e
 
-# Wait for network
-for i in {1..10}; do
-    if ping -c1 8.8.8.8 &>/dev/null; then
-        echo "Network is up: proceed!"
-        break
-    else
-        echo "Network is down: retrying in 10 seconds... ($i/10)"
-        sleep 10
-    fi
-done
+FLAG_DIR=/var/lib/kosmos-setup
+IN_PROG_FILE="$FLAG_DIR/in-progress"
+DONE_FILE="$FLAG_DIR/done"
+
+echo "Adding KosmOS repositories."
 
 # Add KosmOS repository and key
 install -m 755 -d /etc/apt/sources.list.d/
@@ -24,49 +19,37 @@ EOF
 
 wget -O /etc/apt/keyrings/kosmos.gpg.asc https://deb.kosmos-pi.org/keys/kosmos.gpg.asc
 
+echo "Installing packages..."
 # Update repositories, upgrade and install packages
 apt-get update
 apt-get -y upgrade
 
-apt-get -y install -y xserver-xorg lightdm kde-standard realvnc-vnc-server kstars phd2 chromium kosmos-mods
+DEBIAN_FRONTEND=noninteractive apt-get -yq \
+  -o Dpkg::Options::="--force-confdef" \
+  -o Dpkg::Options::="--force-confold" \
+  install xserver-xorg kde-standard realvnc-vnc-server astrophotography-all chromium kosmos-mods
 
-# get the chosen username
-MYUSER=$( getent passwd 1000 | cut -d: -f1 )
+echo "Last tweaks..."
 
-# Setup lightdm
-mv /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf.dist
-cat > /etc/lightdm/lightdm.conf << EOF
-[LightDM]
-
-[Seat:*]
-autologin-user=$MYUSER
-autologin-user-timeout=0
-autologin-session=plasma
-
-[XDMCPServer]
-
-[VNCServer]
-
-EOF
-
-# Setup lightdm greeter
-mv /etc/lightdm/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf.dist
-cat > /etc/lightdm/lightdm-gtk-greeter.conf << EOF
-[greeter]
-background=#1F0000
-EOF
-
-# Prepare for LightDM, VNC and graphic desktop
-systemctl disable sddm
-systemctl enable lightdm
+# Enable VNC server and graphic desktop for the next reboots
 systemctl enable vncserver-x11-serviced.service
 systemctl set-default graphical.target
 
-# Clear our flag so to not run again
-rm -f /etc/trigger-kosmos-setup
+# Copy avatar to sddm system folder
+MYUSER=$( getent passwd 1000 | cut -d: -f1 )
+cp /home/$MYUSER/.face.icon /usr/share/sddm/faces/$MYUSER.face.icon
 
-# Disable kosmos-setup.service
+# Disable setup service and remove it
 systemctl disable kosmos-setup.service
+rm -f /etc/systemd/system/kosmos-setup.service 2> /dev/null || true
+systemctl daemon-reload
 
-# Reboot the system
-reboot
+# Remove setup-related scripts
+rm -f /etc/NetworkManager/dispatcher.d/90-kosmos-retry-setup 2> /dev/null || true
+rm -f /etc/profile.d/kosmos-setup-status.sh 2> /dev/null || true
+rm -f /usr/local/bin/check-kosmos-setup 2> /dev/null || true
+
+# Start the graphical interface and VNC server
+echo "Completed: starting the desktop!"
+systemctl isolate graphical.target
+systemctl start vncserver-x11-serviced.service

@@ -1,0 +1,23 @@
+#! /bin/bash
+
+FLAG_DIR=/var/lib/kosmos-setup
+
+if [ -f "$FLAG_DIR/in-progress" ]; then
+	echo "Setup in progress... "
+	echo "(Press Ctrl+C to exit log monitoring)"
+	journalctl -u kosmos-setup.service -f
+
+elif [ -f "$FLAG_DIR/no-network" ]; then
+	echo "No network available"
+	echo "   Connect with: sudo nmtui"
+	echo "   Setup will restart when connection is available."
+	echo "   You can manually start it with: sudo systemctl start kosmos-setup.service"
+
+elif [ -f "$FLAG_DIR/done" ]; then
+	echo "Setup completed. Enjoy!"
+
+else
+	echo "Setup not started yet."
+	echo "   To start it: sudo systemctl start kosmos-setup.service"
+fi
+
