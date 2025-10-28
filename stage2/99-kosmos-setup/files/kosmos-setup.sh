@@ -13,6 +13,17 @@ for i in {1..10}; do
     fi
 done
 
+# Add KosmOS repository and key
+install -m 755 -d /etc/apt/sources.list.d/
+install -m 755 -d /etc/apt/keyrings/
+
+cat > /etc/apt/sources.list.d/kosmos.list << EOF
+deb [signed-by=/etc/apt/keyrings/kosmos.gpg.asc] https://deb.kosmos-pi.org/bookworm/ bookworm main
+deb [signed-by=/etc/apt/keyrings/kosmos.gpg.asc] https://deb.kosmos-pi.org/bookworm/ bookworm-old main
+EOF
+
+wget -O /etc/apt/keyrings/kosmos.gpg.asc https://deb.kosmos-pi.org/keys/kosmos.gpg.asc
+
 # Update repositories, upgrade and install packages
 apt-get update
 apt-get -y upgrade
