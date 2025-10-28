@@ -65,5 +65,8 @@ systemctl set-default graphical.target
 # Clear our flag so to not run again
 rm -f /etc/trigger-kosmos-setup
 
+# Disable kosmos-setup.service
+systemctl disable kosmos-setup.service
+
 # Reboot the system
 reboot
