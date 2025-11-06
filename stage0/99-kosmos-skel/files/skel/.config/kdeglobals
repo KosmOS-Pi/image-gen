@@ -6,5 +6,5 @@ UseSystemBell=true
 accentColorFromWallpaper=true
 
 [KDE]
-LookAndFeelPackage=org.kosmos-pi.dark.desktop
+LookAndFeelPackage=org.kosmos-pi.light.desktop
 
