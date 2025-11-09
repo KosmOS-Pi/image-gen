@@ -4,6 +4,7 @@ ColorSchemeHash=01662607e36cd33eacc7d7d7189f69c26b9a2cc8
 LastUsedCustomAccentColor=94,0,0
 UseSystemBell=true
 accentColorFromWallpaper=true
+BrowserApplication=chromium.desktop
 
 [KDE]
 LookAndFeelPackage=org.kosmos-pi.light.desktop
