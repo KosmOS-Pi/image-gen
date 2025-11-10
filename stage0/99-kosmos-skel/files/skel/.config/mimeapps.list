@@ -1,5 +1,6 @@
 [Added Associations]
 inode/directory=org.kde.dolphin.desktop;
+text/html=chromium.desktop;kfmclient_html.desktop;org.kde.kate.desktop;org.kde.kwrite.desktop;okularApplication_txt.desktop;
 x-scheme-handler/geo=qwant-maps-geo-handler.desktop;
 x-scheme-handler/http=chromium.desktop;
 x-scheme-handler/https=chromium.desktop;
@@ -8,6 +9,7 @@ x-scheme-handler/tel=org.kde.kdeconnect.handler.desktop;
 
 [Default Applications]
 inode/directory=org.kde.dolphin.desktop;
+text/html=chromium.desktop;
 x-scheme-handler/geo=qwant-maps-geo-handler.desktop;
 x-scheme-handler/http=chromium.desktop;
 x-scheme-handler/https=chromium.desktop;
