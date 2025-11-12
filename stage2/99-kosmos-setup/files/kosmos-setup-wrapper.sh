@@ -5,6 +5,7 @@ TTY=/dev/tty1
 FLAG_DIR=/var/lib/kosmos-setup
 IN_PROG_FILE="$FLAG_DIR/in-progress"
 DONE_FILE="$FLAG_DIR/done"
+FAILED_FILE="$FLAG_DIR/failed"
 NO_NET_FILE="$FLAG_DIR/no-network"
 
 mkdir -p $FLAG_DIR
@@ -32,7 +33,7 @@ check_network() {
 }
 
 # Clean FLAGS
-rm -f $IN_PROG_FILE $NO_NET_FILE
+rm -f $IN_PROG_FILE $NO_NET_FILE $FAILED_FILE
 
 if [ -f $DONE_FILE ]; then
 	log "Completed. Nothing to do here: bye!"
@@ -57,6 +58,7 @@ if check_network; then
 		exit 0
 	else
 		# log and exit failure
+		touch $FAILED_FILE
 		log "Failed."
 		exit 1
 	fi

@@ -23,6 +23,16 @@ elif [ -f "$FLAG_DIR/no-network" ]; then
     echo '****************************************************************************'
     echo
 
+elif [ -f "$FLAG_DIR/failed" ]; then
+    echo
+    echo '****************************** Kosmos setup ********************************'
+    echo ' Setup run and failed. Please check failure reason with:'
+    echo '     > check-kosmos-setup'
+    echo ' Then, restart setup process with:'
+    echo '     > sudo systemctl start kosmos-setup.service'
+    echo '****************************************************************************'
+    echo
+
 elif [ -f "$FLAG_DIR/done" ]; then
     :
 

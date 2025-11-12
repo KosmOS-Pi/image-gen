@@ -13,6 +13,15 @@ elif [ -f "$FLAG_DIR/no-network" ]; then
 	echo "   Setup will restart when connection is available."
 	echo "   You can manually start it with: sudo systemctl start kosmos-setup.service"
 
+elif [ -f "$FLAG_DIR/failed" ]; then
+	echo "Setup run and failed. You can check full setup log with:"
+	echo
+	echo "   > journalctl -u kosmos-setup.service"
+	echo
+	echo "Below are reported last few messages of last setup run."
+	echo
+	sudo systemctl status kosmos-setup.service
+
 elif [ -f "$FLAG_DIR/done" ]; then
 	echo "Setup completed. Enjoy!"
 
